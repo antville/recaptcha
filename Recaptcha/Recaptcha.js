@@ -34,7 +34,7 @@ Recaptcha.verify = function (data) {
     var mime = getURL('https://www.google.com/recaptcha/api/siteverify?secret=' + secret + '&response=' + response + '&remoteip=' + ip);
     var json = JSON.parse(new java.lang.String(mime.content));
     if (!json.success) {
-      throw Error(gettext('.'));
+      throw Error(gettext('Do Androids dream of electric sheep?'));
     }
   }
   return;
