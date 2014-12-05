@@ -26,7 +26,7 @@ Recaptcha.verify = function (data) {
   if (session.user) {
     return;
   }
-  var secret = getProperty('recaptcha.secret');
+  var secret = getProperty('trail.recaptcha.secret');
   if (secret) {
     var response = req.postParams['g-recaptcha-response'];
     var ip = req.data.remotehost;
@@ -44,7 +44,7 @@ Recaptcha.prototype.trail_macro = function () {
   if (session.user) {
     return;
   }
-  var secret = getProperty('recaptcha.secret');
+  var secret = getProperty('trail.recaptcha.secret');
   if (secret) {
     this.renderSkin('Recaptcha#main');
   }
