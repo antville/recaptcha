@@ -26,28 +26,27 @@ Recaptcha.verify = function (data) {
   if (session.user) {
     return;
   }
-  var key = getProperty('recaptcha.key');
-  var http = new helma.Http;
-  http.setTimeout(200);
-  http.setReadTimeout(300);
-  http.setMethod('POST');
-  http.setContent({
-    privatekey: key,
-    remoteip: req.data.http_remotehost,
-    challenge: data.recaptcha_challenge_field,
-    response: data.recaptcha_response_field
-  });
-  var request = http.getUrl('http://www.google.com/recaptcha/api/verify');
-  if (request.code === 200 && !request.content.startsWith('true')) {
-    throw Error(gettext('Please enter the correct words in the CAPTCHA box.'));
+  var secret = getProperty('recaptcha.secret');
+  if (secret) {
+    var response = req.postParams['g-recaptcha-response'];
+    var ip = req.data.remotehost;
+    console.log(ip);
+    var mime = getURL('https://www.google.com/recaptcha/api/siteverify?secret=' + secret + '&response=' + response + '&remoteip=' + ip);
+    var json = JSON.parse(new java.lang.String(mime.content));
+    if (!json.success) {
+      throw Error(gettext('.'));
+    }
   }
   return;
 };
 
 Recaptcha.prototype.trail_macro = function () {
-  var key = getProperty('recaptcha.key');
-  if (key && !session.user) {
-    this.renderSkin('Recaptcha#main', {id: getProperty('recaptcha.id')});
+  if (session.user) {
+    return;
+  }
+  var secret = getProperty('recaptcha.secret');
+  if (secret) {
+    this.renderSkin('Recaptcha#main');
   }
   return;
 };
