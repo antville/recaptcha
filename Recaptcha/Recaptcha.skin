@@ -1,3 +1,0 @@
-<% #main %>
-<script src='https://www.google.com/recaptcha/api.js?hl=<% site.locale %>'></script>
-<div class="g-recaptcha" data-sitekey="6Lef4P4SAAAAADHojcoSZbg94G3Ucw9s4LNbNDH6"></div>

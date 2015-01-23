@@ -16,37 +16,22 @@
 // limitations under the License.
 
 /**
- * @fileoverview Defines the Antville reCAPTCHA Feature.
+ * @fileoverview Defines the Antville reCAPTCHA prototype.
  * @see http://www.google.com/recaptcha
  */
 
-"http://code.google.com/p/antville/wiki/RecaptchaFeature",
-
 Recaptcha.verify = function (data) {
-  if (session.user) {
-    return;
-  }
-  var secret = getProperty('trail.recaptcha.secret');
-  if (secret) {
-    var response = req.postParams['g-recaptcha-response'];
-    var ip = req.data.remotehost;
-    console.log(ip);
-    var mime = getURL('https://www.google.com/recaptcha/api/siteverify?secret=' + secret + '&response=' + response + '&remoteip=' + ip);
-    var json = JSON.parse(new java.lang.String(mime.content));
-    if (!json.success) {
-      throw Error(gettext('Do Androids dream of electric sheep?'));
+  if (!session.user) {
+    var secret = getProperty('claustra.recaptcha.secret');
+    if (secret) {
+      var response = req.postParams['g-recaptcha-response'];
+      var ip = req.data.remotehost;
+      var mime = getURL('https://www.google.com/recaptcha/api/siteverify?secret=' + secret + '&response=' + response + '&remoteip=' + ip);
+      var json = JSON.parse(new java.lang.String(mime.content));
+      if (!json.success) {
+        throw Error(gettext('Do Androids dream of electric sheep?'));
+      }
     }
-  }
-  return;
-};
-
-Recaptcha.prototype.trail_macro = function () {
-  if (session.user) {
-    return;
-  }
-  var secret = getProperty('trail.recaptcha.secret');
-  if (secret) {
-    this.renderSkin('Recaptcha#main');
   }
   return;
 };
