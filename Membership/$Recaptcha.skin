@@ -29,7 +29,7 @@
 <div class='uk-margin-top g-recaptcha' data-sitekey='<% property claustra.recaptcha.sitekey %>'></div>
 
 <% #script %>
-scripts.push(function () {
+$(function () {
   var re = new RegExp('/members/(.*)/contact');
   var match = location.pathname.match(re);
   if (match) {
